@@ -2,4 +2,4 @@
 
 ## 3D Horse Platformer Game
 
-### LevelUP 9 - GameUP
+### Level UP 9 - GameUP
