@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 25011e2b5cb5bfb40b7c8925cd29d8ae
 labels:
+- Fantasy
+- Fight
 - character
 - fantasy
 - fight
@@ -614,7 +616,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.99484545
+        functionName: StartRunning
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
@@ -875,7 +884,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.19072244
+        functionName: Jump
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}

@@ -5,17 +5,18 @@ using UnityEngine;
 public class Camera : MonoBehaviour
 {
     private Transform player;
-    private Vector3 offset;
+    public Vector3 offset;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        offset = transform.position - player.transform.position;
+        offset = transform.position - player.position;
     }
 
     void LateUpdate()
     {
-        //Vector3 newPos = transform.position + offset;
-        //transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime);
-        //transform.LookAt(player);
+        Vector3 newPos = player.position + offset;
+        newPos.y = transform.position.y;
+        transform.position = newPos;
+
     }
 }

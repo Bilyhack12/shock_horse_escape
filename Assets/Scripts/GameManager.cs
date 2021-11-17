@@ -25,4 +25,8 @@ public class GameManager : MonoBehaviour
     public void OnDeath(){
         isDead = true;
     }
+
+    public void OnCatch(){
+        isCaught = true;
+    }
 }

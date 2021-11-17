@@ -9,61 +9,62 @@ public class Player : MonoBehaviour
     private float walkSpeed = 2.0f;
     private float turnSpeed = 5.0f;
     private float runSpeed = 12.0f;
+    private float gravity = 2.0f;
+    private float jumpForce = 15.0f;
+    private float verticalVelocity;
     private bool isWalking = false;
+
+    public bool isGrounded = false;
     private bool isRunning = false;
 
     void Awake()
     {
-        //anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
     }
 
     void Start(){
-        //anim.SetBool("walking", isWalking);
+        //Time.timeScale = 0.5f;
     }
 
     void Update()
     {
-        if(MobileInput.Instance.SwipeRight && !isWalking){
-            Debug.Log("walk");
-            isWalking = true;
-            anim.SetBool("walking", isWalking);
+        if(MobileInput.Instance.Tap && !isRunning){
+            anim.SetBool("running", true);
         }
-
-        else if(MobileInput.Instance.SwipeRight && isWalking && !isRunning){
-            Debug.Log("run");
-            isRunning = true;
-            anim.SetBool("running", isRunning);
-        }
-
-        else if(MobileInput.Instance.SwipeLeft && isRunning){
-            Debug.Log("backToWalk");
-            isRunning = false;
-            anim.SetBool("running", isRunning);
-        }
-
-        else if(MobileInput.Instance.SwipeLeft && !isRunning && isWalking){
-            Debug.Log("backToStop");
-            isWalking = false;
-            anim.SetBool("walking", isWalking);
-        }
-
         else if(MobileInput.Instance.SwipeUp && isRunning){
             Debug.Log("jump");
             anim.SetTrigger("jump");
         }
 
-        else if(MobileInput.Instance.SwipeLeft && !isWalking && !isRunning){
+        else if(MobileInput.Instance.DoubleTap && !isRunning){
             anim.SetTrigger("attack");
         }
 
-        else if(MobileInput.Instance.SwipeDown && !isWalking && !isRunning){
+        else if(MobileInput.Instance.SwipeDown && !isRunning){
             anim.SetTrigger("eat");
         }
-        //Vector3 moveVector = new Vector3(0, 0, xInput).normalized;
-        //Vector3 turnVector = new Vector3(xInput, 0, 0).normalized;
-        //Debug.Log(moveVector);
-        //controller.Move(moveVector * walkSpeed * Time.deltaTime);
-        //transform.Rotate(turnVector * turnSpeed * Time.deltaTime);
+
+        isGrounded = controller.isGrounded;
+
+        if(controller.isGrounded){
+            verticalVelocity -= 0.1f;
+        }
+        else{
+            verticalVelocity -= gravity;
+        }
+
+        Vector3 moveVector = Vector3.zero;
+        moveVector.y = verticalVelocity;
+        if(isRunning){
+            moveVector.z = runSpeed;
+        }
+        Debug.Log(moveVector);
+        controller.Move(moveVector * Time.deltaTime);
     }
+     public void StartRunning(){
+        isRunning = true;
+     }
+     public void Jump(){
+        verticalVelocity = jumpForce;
+     }
 }
