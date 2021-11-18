@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private float walkSpeed = 2.0f;
     private float turnSpeed = 5.0f;
     private float runSpeed = 12.0f;
-    private float gravity = 2.0f;
+    private float gravity = 1.0f;
     private float jumpForce = 15.0f;
     private float verticalVelocity;
     private bool isWalking = false;
@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     }
 
     void Start(){
-        //Time.timeScale = 0.5f;
+        //Time.timeScale = 0.3f;
     }
 
     void Update()
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
         if(MobileInput.Instance.Tap && !isRunning){
             anim.SetBool("running", true);
         }
-        else if(MobileInput.Instance.SwipeUp && isRunning){
+        else if((MobileInput.Instance.SwipeUp || Input.GetAxis("Vertical")>0) && isRunning){
             Debug.Log("jump");
             anim.SetTrigger("jump");
         }
@@ -58,13 +58,32 @@ public class Player : MonoBehaviour
         if(isRunning){
             moveVector.z = runSpeed;
         }
-        Debug.Log(moveVector);
         controller.Move(moveVector * Time.deltaTime);
     }
      public void StartRunning(){
         isRunning = true;
      }
+
+     public void StopRunning(){
+        isRunning = false;
+     }
      public void Jump(){
         verticalVelocity = jumpForce;
+     }
+
+     void OnCollisionEnter(Collision collision){
+         Debug.Log("hit c");
+         if(collision.collider.CompareTag("Obstacle")){
+             anim.SetTrigger("death");
+             StopRunning();
+         }
+     }
+
+    void OnTriggerEnter(Collider collider){
+         Debug.Log("hit");
+         if(collider.CompareTag("Obstacle")){
+             anim.SetTrigger("death");
+             StopRunning();
+         }
      }
 }
