@@ -3,3 +3,7 @@
 ## 3D Horse Platformer Game
 
 ### Level UP 9 - GameUP
+
+#### Screenshots
+
+![alt text](https://github.com/bilyhack12/shock_horse_escape/blob/main/Public/Screenshot.png?raw=true)
