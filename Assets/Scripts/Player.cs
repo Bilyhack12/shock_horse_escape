@@ -23,12 +23,14 @@ public class Player : MonoBehaviour
     }
 
     void Start(){
-        //Time.timeScale = 0.3f;
+
     }
 
     void Update()
     {
         if(MobileInput.Instance.Tap && !isRunning){
+            GameManager.Instance.isGameStarted = true;
+            ObstacleSpawner.Instance.SpawnRandomObstacle();
             anim.SetBool("running", true);
         }
         else if((MobileInput.Instance.SwipeUp || Input.GetAxis("Vertical")>0) && isRunning){
@@ -55,13 +57,14 @@ public class Player : MonoBehaviour
 
         Vector3 moveVector = Vector3.zero;
         moveVector.y = verticalVelocity;
-        if(isRunning){
+        if(isRunning && GameManager.Instance.isGameStarted){
             moveVector.z = runSpeed;
         }
         controller.Move(moveVector * Time.deltaTime);
     }
      public void StartRunning(){
         isRunning = true;
+        GameManager.Instance.StartGame();
      }
 
      public void StopRunning(){
