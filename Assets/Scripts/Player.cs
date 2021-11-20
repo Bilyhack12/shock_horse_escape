@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     }
 
     void Start(){
-
+        //Time.timeScale = .3f;
     }
 
     void Update()
@@ -34,7 +34,6 @@ public class Player : MonoBehaviour
             anim.SetBool("running", true);
         }
         else if((MobileInput.Instance.SwipeUp || Input.GetAxis("Vertical")>0) && isRunning){
-            Debug.Log("jump");
             anim.SetTrigger("jump");
         }
 
