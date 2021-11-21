@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 public class Player : MonoBehaviour
 {
     public Animator anim;
@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private float turnSpeed = 5.0f;
     private float runSpeed = 12.0f;
     private float gravity = 1.0f;
-    private float jumpForce = 15.0f;
+    private float jumpForce = 10.0f;
     private float verticalVelocity;
     private bool isWalking = false;
 
@@ -28,8 +28,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if(MobileInput.Instance.Tap && !isRunning){
-            GameManager.Instance.isGameStarted = true;
+        if(MobileInput.Instance.Tap && !isRunning && GameManager.Instance.isGameStarted){
             ObstacleSpawner.Instance.SpawnRandomObstacle();
             anim.SetBool("running", true);
         }
@@ -47,7 +46,7 @@ public class Player : MonoBehaviour
 
         isGrounded = controller.isGrounded;
 
-        if(controller.isGrounded){
+        if(isGrounded){
             verticalVelocity -= 0.1f;
         }
         else{
@@ -63,7 +62,6 @@ public class Player : MonoBehaviour
     }
      public void StartRunning(){
         isRunning = true;
-        GameManager.Instance.StartGame();
      }
 
      public void StopRunning(){
@@ -73,19 +71,27 @@ public class Player : MonoBehaviour
         verticalVelocity = jumpForce;
      }
 
-     void OnCollisionEnter(Collision collision){
+     /*void OnCollisionEnter(Collision collision){
          Debug.Log("hit c");
          if(collision.collider.CompareTag("Obstacle")){
              anim.SetTrigger("death");
              StopRunning();
          }
      }
+     */
 
     void OnTriggerEnter(Collider collider){
          Debug.Log("hit");
          if(collider.CompareTag("Obstacle")){
-             anim.SetTrigger("death");
              StopRunning();
+             Invoke("OnDeath" ,2.0f);
+             anim.SetTrigger("death");
          }
      }
+
+     private void OnDeath(){
+        GameManager.Instance.OnDeath();
+     }
+
+     
 }

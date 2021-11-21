@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public bool isGameStarted = false;
     public bool isGameOver = false;
     private Player motor;
+    
+    public GameObject startMenuPanel;
 
     private void Awake(){
         Instance = this;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
     public void StartGame(){
         isGameOver = false;
         isGameStarted = true;
+        startMenuPanel.SetActive(false);
     }
 
     public void GameOver(){
@@ -28,7 +31,6 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update(){
-        RenderSettings.skybox.SetFloat("_Rotation", Time.time);
         if(isGameStarted && !isGameOver && !isDead && !isCaught){
             
         }
@@ -36,9 +38,14 @@ public class GameManager : MonoBehaviour
 
     public void OnDeath(){
         isDead = true;
+        SceneManager.LoadScene("Game");
     }
 
     public void OnCatch(){
         isCaught = true;
+    }
+
+    public void QuitGame(){
+        Application.Quit();
     }
 }
