@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
             ObstacleSpawner.Instance.SpawnRandomObstacle();
             anim.SetBool("running", true);
         }
-        else if((MobileInput.Instance.SwipeUp || Input.GetAxis("Vertical")>0) && isRunning){
+        else if(MobileInput.Instance.SwipeUp && isRunning){
             anim.SetTrigger("jump");
         }
 

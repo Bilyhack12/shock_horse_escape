@@ -7,7 +7,7 @@ public class ObstacleSpawner : MonoBehaviour
     public static ObstacleSpawner Instance {set; get;}
     public GameObject[] obstaclesPrefabs;
     public GameObject[] spawnedObstacles;
-    private float spawnMaxDistance = 60;
+    private float spawnMaxDistance = 40;
     private float spawnMinDistance = 20;
     private float spawnPositionX = 15f;
     private float spawnInterval;
@@ -40,6 +40,7 @@ public class ObstacleSpawner : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        lastSpawnPosition = player.transform.position;
     }
 
     int GetObstacleTypeCount(GameObject[] obstacles, GameObject gameObject){
@@ -60,14 +61,16 @@ public class ObstacleSpawner : MonoBehaviour
         if(availableObstacle != null){
             availableObstacle.transform.position = spawnPosition;
             availableObstacle.SetActive(true);
+            lastSpawnPosition = spawnPosition;
         }
         else if(GetObstacleTypeCount(spawnedObstacles, obstaclesPrefabs[obstacleIndex])<3){
             GameObject obstacle = Instantiate(obstaclesPrefabs[obstacleIndex], spawnPosition, Quaternion.identity);
             obstacle.transform.parent = transform;
+            lastSpawnPosition = spawnPosition;
         }
-        lastSpawnPosition = spawnPosition;
+        
         spawnInterval = Random.Range(0f, 1f);
-        Invoke("SpawnRandomObstacle",spawnInterval);
+        Invoke("SpawnRandomObstacle", spawnInterval);
     }
 
     // Update is called once per frame

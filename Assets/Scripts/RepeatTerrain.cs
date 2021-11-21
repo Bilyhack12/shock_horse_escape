@@ -12,7 +12,7 @@ public class RepeatTerrain : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        backLocator = GameObject.FindGameObjectWithTag("BackLocator");
+        backLocator = GameObject.FindGameObjectWithTag("BackLocator").gameObject;
     }
 
     void Update()

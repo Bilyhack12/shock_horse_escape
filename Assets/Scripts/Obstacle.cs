@@ -4,7 +4,9 @@ using UnityEngine;
 
 public enum ObstacleType{
     none = -1,
-    rock1 = 0
+    rock1 = 0,
+    rock2 = 1,
+    rock3 = 2
 }
 public class Obstacle : MonoBehaviour
 {
