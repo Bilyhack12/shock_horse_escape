@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     public bool isGrounded = false;
     private bool isRunning = false;
 
+    // sound variables 
+    private AudioSource playerAudio; // players audio source variable
+    public AudioClip horseRunning;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -24,6 +28,7 @@ public class Player : MonoBehaviour
 
     void Start(){
         //Time.timeScale = .3f;
+        playerAudio = GetComponent<AudioSource>(); // init to audio source component
     }
 
     void Update()
@@ -31,6 +36,7 @@ public class Player : MonoBehaviour
         if(MobileInput.Instance.Tap && !isRunning && GameManager.Instance.isGameStarted){
             ObstacleSpawner.Instance.SpawnRandomObstacle();
             anim.SetBool("running", true);
+            playerAudio.Play(); //play background music
         }
         else if(MobileInput.Instance.SwipeUp && isRunning){
             anim.SetTrigger("jump");
@@ -62,6 +68,8 @@ public class Player : MonoBehaviour
     }
      public void StartRunning(){
         isRunning = true;
+        //playerAudio.PlayOneShot(horseRunning, .5f); //play running horse
+        
      }
 
      public void StopRunning(){
@@ -86,6 +94,7 @@ public class Player : MonoBehaviour
              StopRunning();
              Invoke("OnDeath" ,2.0f);
              anim.SetTrigger("death");
+             playerAudio.Stop();
          }
      }
 
