@@ -1,6 +1,7 @@
 /obj
 /Logs
 /Temp
+/Library
 /UserSettings
 .vs
 .vscode
