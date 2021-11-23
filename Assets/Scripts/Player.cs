@@ -14,6 +14,10 @@ public class Player : MonoBehaviour
     private float verticalVelocity;
     private bool isWalking = false;
 
+    // sound variables 
+    private AudioSource playerAudio; // players audio source variable
+    public AudioClip horseRunning;
+
     public bool isGrounded = false;
     private bool isRunning = false;
 
@@ -24,23 +28,35 @@ public class Player : MonoBehaviour
 
     void Start(){
         //Time.timeScale = .3f;
+
+        playerAudio = GetComponent<AudioSource>(); // init to audio source component
     }
 
     void Update()
     {
-        if(MobileInput.Instance.Tap && !isRunning && GameManager.Instance.isGameStarted){
+        if (MobileInput.Instance.Tap && !isRunning && GameManager.Instance.isGameStarted)
+        {
             ObstacleSpawner.Instance.SpawnRandomObstacle();
             anim.SetBool("running", true);
+
+            playerAudio.PlayDelayed(2.0f); // play the horse running clip ( delay for 2 seconds)
         }
-        else if(MobileInput.Instance.SwipeUp && isRunning){
+
+        else if (MobileInput.Instance.SwipeUp && isRunning)
+        {
             anim.SetTrigger("jump");
+            
         }
 
-        else if(MobileInput.Instance.DoubleTap && !isRunning){
+        else if (MobileInput.Instance.DoubleTap && !isRunning)
+        {
             anim.SetTrigger("attack");
+
+            
         }
 
-        else if(MobileInput.Instance.SwipeDown && !isRunning){
+        else if (MobileInput.Instance.SwipeDown && !isRunning)
+        {
             anim.SetTrigger("eat");
         }
 
@@ -86,6 +102,7 @@ public class Player : MonoBehaviour
              StopRunning();
              Invoke("OnDeath" ,2.0f);
              anim.SetTrigger("death");
+            playerAudio.Stop();
          }
      }
 
