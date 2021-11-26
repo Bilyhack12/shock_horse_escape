@@ -36,9 +36,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void RestartGame(){
+        SceneManager.LoadScene("Game");
+    }
+
     public void OnDeath(){
         isDead = true;
-        SceneManager.LoadScene("Game");
+        RestartGame();
     }
 
     public void OnCatch(){

@@ -14,6 +14,6 @@ public class Light : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(rotationSpeed * Time.deltaTime, 0.0f, 0.0f, Space.Self);
+        transform.Rotate(0.0f, rotationSpeed * Time.deltaTime, 0.0f, Space.World);
     }
 }

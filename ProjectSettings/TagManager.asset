@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstacle
   - BackLocator
+  - Farmer
+  - Ground
   layers:
   - Default
   - TransparentFX

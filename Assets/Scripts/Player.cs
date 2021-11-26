@@ -6,15 +6,13 @@ public class Player : MonoBehaviour
 {
     public Animator anim;
     private CharacterController controller;
-    private float walkSpeed = 2.0f;
-    private float turnSpeed = 5.0f;
     private float runSpeed = 12.0f;
     private float gravity = 1.0f;
     private float jumpForce = 10.0f;
     private float verticalVelocity;
-    private bool isWalking = false;
 
     public bool isGrounded = false;
+    private Farmer farmer;
     private bool isRunning = false;
 
     // sound variables 
@@ -24,6 +22,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+        farmer = GameObject.FindGameObjectWithTag("Farmer").GetComponent<Farmer>();
     }
 
     void Start(){
@@ -42,7 +41,7 @@ public class Player : MonoBehaviour
             anim.SetTrigger("jump");
         }
 
-        else if(MobileInput.Instance.DoubleTap && !isRunning){
+        else if(MobileInput.Instance.DoubleTap && isRunning){
             anim.SetTrigger("attack");
         }
 
@@ -62,14 +61,14 @@ public class Player : MonoBehaviour
         Vector3 moveVector = Vector3.zero;
         moveVector.y = verticalVelocity;
         if(isRunning && GameManager.Instance.isGameStarted){
-            moveVector.z = runSpeed;
+            moveVector.z = runSpeed; //move forward;
         }
         controller.Move(moveVector * Time.deltaTime);
     }
      public void StartRunning(){
-        isRunning = true;
+        isRunning = true; //Start pushing the horse on the ground
         //playerAudio.PlayOneShot(horseRunning, .5f); //play running horse
-        
+        farmer.StartRunning();
      }
 
      public void StopRunning(){
@@ -92,6 +91,7 @@ public class Player : MonoBehaviour
          Debug.Log("hit");
          if(collider.CompareTag("Obstacle")){
              StopRunning();
+             GameManager.Instance.GameOver();
              Invoke("OnDeath" ,2.0f);
              anim.SetTrigger("death");
              playerAudio.Stop();
