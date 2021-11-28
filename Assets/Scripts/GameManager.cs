@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,43 +11,60 @@ public class GameManager : MonoBehaviour
     public bool isDead = false, isCaught = false;
     public bool isGameStarted = false;
     public bool isGameOver = false;
-    private Player motor;
+    private GameObject horse;
     
     public GameObject startMenuPanel;
+    public GameObject boardPanel;
+    private float distance;
+    private Vector3 initialPosition;
+    public TextMeshProUGUI distanceText;
+
 
     private void Awake(){
         Instance = this;
-        motor = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        horse = GameObject.FindGameObjectWithTag("Player");
     }
 
-    public void StartGame(){
+    private void Start(){
+        initialPosition = horse.transform.position;
+        distance = 0;
+        UpdateDistance();
+    }
+
+    private void UpdateDistance(){
+        distanceText.SetText("Distance: {0:1}m", distance);
+    }
+
+    public void PlayGame(){
         isGameOver = false;
         isGameStarted = true;
         startMenuPanel.SetActive(false);
+        boardPanel.SetActive(true);
     }
 
     public void GameOver(){
         isGameOver = true;
-        isGameStarted = false;
     }
 
     private void Update(){
         if(isGameStarted && !isGameOver && !isDead && !isCaught){
-            
+            distance = Mathf.Abs(horse.transform.position.z - initialPosition.z);
+            UpdateDistance();
         }
     }
 
-    private void RestartGame(){
+    public void RestartGame(){
         SceneManager.LoadScene("Game");
     }
 
     public void OnDeath(){
         isDead = true;
-        RestartGame();
+        //RestartGame();
     }
 
     public void OnCatch(){
         isCaught = true;
+        //RestartGame();
     }
 
     public void QuitGame(){

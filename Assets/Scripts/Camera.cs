@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
+    public static Camera Instance;
+    private AudioSource audioSource; // players audio source variable
+    
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>(); // init to audio source component
+    }
+
+    public void StartBackgroundMusic(){
+        audioSource.Play();
+    }
+
+    public void StopBackgroundMusic(){
+        audioSource.Stop();
     }
 }

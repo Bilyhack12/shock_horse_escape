@@ -9,14 +9,16 @@ public class Farmer : MonoBehaviour
     private CharacterController controller;
     private float runSpeed = 12.0f;
     private float gravity = 1.0f;
-    private float jumpForce = 12.0f;
+    private float jumpForce = 15.0f;
     private float verticalVelocity;
+    private GameObject horse;
 
     public bool isGrounded = false;
 
     void Awake(){
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        horse = GameObject.FindGameObjectWithTag("Player");
     }
     void Start()
     {
@@ -46,14 +48,17 @@ public class Farmer : MonoBehaviour
             verticalVelocity -= gravity;
         }
 
+        if(Mathf.Abs(transform.position.z-horse.transform.position.z) < 2.0f && GameManager.Instance.isGameOver && !GameManager.Instance.isCaught){
+            Debug.Log("Caught");
+            GameManager.Instance.OnCatch();
+            StopRunning();
+            anim.SetTrigger("kneel");
+            //Invoke("RestartGame", 4.0f);
+        }
+
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 2.5f, 1)){
-            if(GameManager.Instance.isGameOver && hit.transform.CompareTag("Player")){
-                Debug.Log("Caught");
-                GameManager.Instance.OnCatch();
-                StopRunning();
-            }
-            if(isRunning && isGrounded && hit.transform.CompareTag("Obstacle")){
+        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5f, 1)){
+            if(isRunning && isGrounded && hit.transform.CompareTag("Obstacle") && hit.distance<=2.0f){
                 Jump();
                 Debug.Log("AI Jump");
             }
@@ -67,6 +72,10 @@ public class Farmer : MonoBehaviour
         controller.Move(moveVector * Time.deltaTime);
     }
 
+    public void IsCaught(){
+        GameManager.Instance.RestartGame();
+    }
+
     private bool IsGrounded(){
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1.0f, 1)){
@@ -78,10 +87,15 @@ public class Farmer : MonoBehaviour
     }
 
     public void Jump(){
+        isGrounded = false;
         verticalVelocity = jumpForce;
     }
 
     private void SlowDown(){
         runSpeed -= 1.0f;
+    }
+
+    private void RestartGame(){
+        GameManager.Instance.RestartGame();
     }
 }

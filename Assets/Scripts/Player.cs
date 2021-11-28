@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     // sound variables 
     private AudioSource playerAudio; // players audio source variable
     public AudioClip horseRunning;
+    public AudioClip horseWhinny;
 
     void Awake()
     {
@@ -35,9 +36,10 @@ public class Player : MonoBehaviour
         if(MobileInput.Instance.Tap && !isRunning && GameManager.Instance.isGameStarted){
             ObstacleSpawner.Instance.SpawnRandomObstacle();
             anim.SetBool("running", true);
-            playerAudio.Play(); //play background music
+            playerAudio.PlayOneShot(horseWhinny, .5f);
         }
         else if(MobileInput.Instance.SwipeUp && isRunning){
+            playerAudio.Stop();
             anim.SetTrigger("jump");
         }
 
@@ -52,6 +54,9 @@ public class Player : MonoBehaviour
         isGrounded = controller.isGrounded;
 
         if(isGrounded){
+            if(isRunning && !playerAudio.isPlaying){
+                playerAudio.Play();
+            }
             verticalVelocity -= 0.1f;
         }
         else{
@@ -67,12 +72,14 @@ public class Player : MonoBehaviour
     }
      public void StartRunning(){
         isRunning = true; //Start pushing the horse on the ground
-        //playerAudio.PlayOneShot(horseRunning, .5f); //play running horse
+        playerAudio.clip = horseRunning;
+        playerAudio.Play();
         farmer.StartRunning();
      }
 
      public void StopRunning(){
         isRunning = false;
+        playerAudio.Stop();
      }
      public void Jump(){
         verticalVelocity = jumpForce;
@@ -92,14 +99,13 @@ public class Player : MonoBehaviour
          if(collider.CompareTag("Obstacle")){
              StopRunning();
              GameManager.Instance.GameOver();
-             Invoke("OnDeath" ,2.0f);
+             GameManager.Instance.OnDeath();
              anim.SetTrigger("death");
-             playerAudio.Stop();
          }
      }
 
      private void OnDeath(){
-        GameManager.Instance.OnDeath();
+        //GameManager.Instance.OnDeath();
      }
 
      
