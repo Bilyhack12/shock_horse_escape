@@ -6,4 +6,6 @@
 
 #### Screenshots
 
+![alt text](https://github.com/bilyhack12/shock_horse_escape/blob/main/Public/Main-Menu.png?raw=true)
+
 ![alt text](https://github.com/bilyhack12/shock_horse_escape/blob/main/Public/Screenshot.png?raw=true)
