@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Light : MonoBehaviour
 {
-    public float rotationSpeed = .1f;
+    public float rotationSpeed = 1.0f;
     // Start is called before the first frame update
     void Start()
     {

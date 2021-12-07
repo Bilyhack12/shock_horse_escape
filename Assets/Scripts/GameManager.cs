@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour
     public bool isGameStarted = false;
     public bool isGameOver = false;
     private GameObject horse;
-    
-    public GameObject startMenuPanel;
+
     public GameObject boardPanel;
     private float distance;
     private Vector3 initialPosition;
@@ -38,8 +37,6 @@ public class GameManager : MonoBehaviour
     public void PlayGame(){
         isGameOver = false;
         isGameStarted = true;
-        startMenuPanel.SetActive(false);
-        boardPanel.SetActive(true);
     }
 
     public void GameOver(){

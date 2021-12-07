@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Farmer : MonoBehaviour
 {
+    private float MIN_DISTANCE_TO_STAY = 17.0f;
     private bool isRunning = false;
     private Animator anim;
     private CharacterController controller;
     private float runSpeed = 12.0f;
-    private float gravity = 1.0f;
-    private float jumpForce = 15.0f;
+    private float minRunSpeed = 11.0f;
+    private float maxRunSpeed = 12.0f;
+    private float gravity = 12.0f;
+    private float jumpForce = 3.0f;
     private float verticalVelocity;
     private GameObject horse;
 
@@ -45,7 +48,7 @@ public class Farmer : MonoBehaviour
             verticalVelocity -= 0.1f;
         }
         else{
-            verticalVelocity -= gravity;
+            verticalVelocity -= gravity * Time.deltaTime;
         }
 
         if(Mathf.Abs(transform.position.z-horse.transform.position.z) < 2.0f && GameManager.Instance.isGameOver && !GameManager.Instance.isCaught){
@@ -62,6 +65,10 @@ public class Farmer : MonoBehaviour
                 Jump();
                 Debug.Log("AI Jump");
             }
+        }
+
+        if(Mathf.Abs(horse.transform.position.z - transform.position.z) >= MIN_DISTANCE_TO_STAY && runSpeed < maxRunSpeed){
+            BackToSpeed();
         }
 
         Vector3 moveVector = Vector3.zero;
@@ -92,7 +99,11 @@ public class Farmer : MonoBehaviour
     }
 
     private void SlowDown(){
-        runSpeed -= 1.0f;
+        runSpeed = minRunSpeed;
+    }
+
+    private void BackToSpeed(){
+        runSpeed = maxRunSpeed;
     }
 
     private void RestartGame(){

@@ -36,13 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Particle Dynamics Magic\Editor\SkinnedGameobjEditorPDM.cs" />
-     <Compile Include="Assets\Particle Dynamics Magic\Editor\SplinePEditor.cs" />
-     <Compile Include="Assets\Particle Dynamics Magic\Editor\PlaceGameobjectFREEFORMEditor.cs" />
-     <Compile Include="Assets\Particle Dynamics Magic\Editor\PlaceParticleFREEFORMEditor.cs" />
-     <Compile Include="Assets\Particle Dynamics Magic\Editor\SkinnedEditorPDM.cs" />
-     <Compile Include="Assets\Particle Dynamics Magic\Editor\SKinColoredMaskedEditorPDM.cs" />
-     <Compile Include="Assets\Particle Dynamics Magic\Editor\SkinnedColoredEditorPDM.cs" />
+     <Compile Include="Assets\Animals Full Pack Sound FX\Editor\AnimalSFXEditor.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.10f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -678,6 +672,18 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{098b574c-b434-5a6d-7d8c-4e729feae79a}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="Boxophobic.Utils.Scripts.csproj">
+      <Project>{8aed8670-3890-67ee-638a-ec0bc6411482}</Project>
+      <Name>Boxophobic.Utils.Scripts</Name>
+    </ProjectReference>
+    <ProjectReference Include="Boxophobic.Utils.Editor.csproj">
+      <Project>{78b0c980-f539-ae50-b29e-ccfff701b576}</Project>
+      <Name>Boxophobic.Utils.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Boxophobic.SkyboxCubemapExtended.Editor.csproj">
+      <Project>{3656cc92-d9ca-558e-341a-f29df8c7aef0}</Project>
+      <Name>Boxophobic.SkyboxCubemapExtended.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

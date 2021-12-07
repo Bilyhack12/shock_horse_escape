@@ -9,7 +9,7 @@ public class ObstacleSpawner : MonoBehaviour
     public GameObject[] spawnedObstacles;
     private float spawnMaxDistance = 40;
     private float spawnMinDistance = 20;
-    private float spawnPositionX = 15f;
+    private float spawnPositionX = 50f;
     private float spawnInterval;
     private float startDelay = 5.0f;
     private Vector3 lastSpawnPosition;    
